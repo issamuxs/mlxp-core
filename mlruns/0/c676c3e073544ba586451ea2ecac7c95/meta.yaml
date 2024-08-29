@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/Issam/Library/CloudStorage/GoogleDrive-issam.ibnouhsein%40gmail.com/Mon%20Drive/coding/ml-platform/ml-workflow-demo/mlruns/0/c676c3e073544ba586451ea2ecac7c95/artifacts
+end_time: 1724941782139
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c676c3e073544ba586451ea2ecac7c95
+run_name: sk-lr
+run_uuid: c676c3e073544ba586451ea2ecac7c95
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1724941779968
+status: 3
+tags: []
+user_id: Issam

@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1724942675671
+current_stage: None
+description: null
+last_updated_timestamp: 1724942675671
+name: IrisModel
+run_id: 3fd9c810e45b4ddfac3be71036914434
+run_link: null
+source: file:///Users/Issam/Library/CloudStorage/GoogleDrive-issam.ibnouhsein%40gmail.com/Mon%20Drive/coding/ml-platform/ml-workflow-demo/mlruns/0/3fd9c810e45b4ddfac3be71036914434/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///Users/Issam/Library/CloudStorage/GoogleDrive-issam.ibnouhsein%40gmail.com/Mon%20Drive/coding/ml-platform/ml-workflow-demo/mlruns/0/3fd9c810e45b4ddfac3be71036914434/artifacts/model
+user_id: null
+version: 2
