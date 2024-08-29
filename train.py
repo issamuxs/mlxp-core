@@ -1,13 +1,23 @@
+#import libraries and utils functions
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 import mlflow
-from mlflow.tracking import MlflowClient
-from mlflow.exceptions import MlflowException
 import argparse
 from utils import get_next_version, register_model
 
 def train_register_lr_model(experiment_name, model_name, register):
+    """
+    Train a logistic regression model on the Iris dataset and log to MLflow.
+
+    Parameters:
+    experiment_name (str): Name of the MLflow experiment
+    model_name (str): Name for the model in MLflow
+    register (str): 'true' to register the model, 'false' otherwise
+
+    This function trains the model, logs metrics and parameters to MLflow,
+    and optionally registers the model in the MLflow Model Registry.
+    """
     iris = load_iris()
     X = iris['data']
     y = iris['target']
