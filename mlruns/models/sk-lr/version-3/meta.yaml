@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1724963242993
+current_stage: None
+description: null
+last_updated_timestamp: 1724963242993
+name: sk-lr
+run_id: 99278f3881394bcfb9dab87cbe78b3a1
+run_link: null
+source: file:///Users/Issam/Library/CloudStorage/GoogleDrive-issam.ibnouhsein%40gmail.com/Mon%20Drive/coding/ml-platform/ml-workflow-demo/mlruns/103859509932417601/99278f3881394bcfb9dab87cbe78b3a1/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///Users/Issam/Library/CloudStorage/GoogleDrive-issam.ibnouhsein%40gmail.com/Mon%20Drive/coding/ml-platform/ml-workflow-demo/mlruns/103859509932417601/99278f3881394bcfb9dab87cbe78b3a1/artifacts/model
+user_id: null
+version: 3
