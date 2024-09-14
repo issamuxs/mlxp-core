@@ -44,7 +44,7 @@ def train_register_lr_model(experiment_name, model_name, register):
         print("No model registered for this run")
 
 def main():
-    mlflow.set_tracking_uri("http://<EC2_PUBLIC_IP>:5000")
+    mlflow.set_tracking_uri("http://35.181.52.244:8080")
     parser = argparse.ArgumentParser(description="Train and log a logistic regression model in MLflow")
     parser.add_argument("-en", "--experiment_name", type=str)
     parser.add_argument("-mn", "--model_name", type=str)
