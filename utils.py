@@ -28,21 +28,5 @@ def get_next_version(model_name):
             return -1
 
 
-def register_model(run_id, model_name):
-    """
-    Register a model in MLflow Model Registry.
-
-    Parameters:
-    run_id (str): MLflow run ID where the model is logged
-    model_name (str): Name to register the model under
-
-    Returns:
-    RegisteredModel: The registered model object
-
-    This function registers a model from a specific MLflow run
-    to the MLflow Model Registry.
-    """
-    client = MlflowClient()
-    registered_model = mlflow.register_model(f"runs:/{run_id}/model", model_name)
 
 

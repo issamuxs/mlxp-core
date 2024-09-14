@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 import mlflow
 import argparse
-from utils import get_next_version, register_model
+from utils import get_next_version
 
 def train_register_lr_model(experiment_name, model_name, register):
     """
@@ -39,12 +39,13 @@ def train_register_lr_model(experiment_name, model_name, register):
 
     if register == 'true':
         print(f"Registering model {model_name} under version {model_version} for this run")
-        register_model(run.info.run_id, model_name)
+        mlflow.register_model(f"runs:/{run.info.run_id}/model", model_name)
     else:
         print("No model registered for this run")
 
 def main():
-    parser = argparse.ArgumentParser(description="Train and log a logistic regression model in Mlflow")
+    mlflow.set_tracking_uri("http://<EC2_PUBLIC_IP>:5000")
+    parser = argparse.ArgumentParser(description="Train and log a logistic regression model in MLflow")
     parser.add_argument("-en", "--experiment_name", type=str)
     parser.add_argument("-mn", "--model_name", type=str)
     parser.add_argument("-r", "--register", choices=['true', 'false'], default='false', type=str)
