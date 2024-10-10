@@ -1,7 +1,15 @@
+# MLXP-Core
+
+### Context
+
+The MLXP-Core repository is part of the ML-platform-demo project. The latter is composed of 3 parts:
+1. MLXP-Core: An experiments tracking server based on MLflow hosted on AWS
+2. MLXP-Wrapper: A wrapper over the MLflow server that enables config-based data science
+3. MLXP-Algo: A library that reproduces some of the key machine learning algorithms
+
 ### Description
 
-
-This project aims to deploy and validate the setup of an MLflow server on a AWS EC2 instance and provide a public IP and port to access the server for machine learning experiments management.
+The MLXP-Core project aims to deploy and validate the setup of an MLflow server on a AWS EC2 instance and provide a public IP and port to access the server for machine learning experiments management.
 
 The major steps of the deployment are the following:
 1. The file base_config.sh must be updated with the user AWS and project information.
@@ -12,7 +20,7 @@ The major steps of the deployment are the following:
 
 The technical steps for the project deployment are the following.
 
-0. #### TODO
+0. TODO
 Currently, security group, associated policy and project user attached to security group are created through AWS console. Next step is to add terraform file to setup these and automate key retrieval to update AWS credentials, config and profile.
 
 1. Check the AWS profiles:
