@@ -10,7 +10,7 @@ AMI_ID="ami-021c1ea7d34cd5363"
 SECURITY_GROUP="ml-components-demo"
 IAM_ROLE_NAME="personal-projects"
 ACCOUNT_ID="882335105845"
-BUCKET_PREFIX="ml-workflow-demo"
+BUCKET_PREFIX="mlxp-core"
 BUCKET_NAME="${BUCKET_PREFIX}-${ACCOUNT_ID}-${AWS_REGION}"
 
 #MLflow configuration
@@ -21,7 +21,7 @@ MLFLOW_BACKEND_STORE="sqlite:////opt/mlflow/mlflow.db"
 
 #SSH configuration
 SSH_USER="ec2-user"
-SSH_KEY_NAME="ml-workflow-demo"
+SSH_KEY_NAME="mlxp-core06"
 
 #Logging
 LOG_FILE="/tmp/ml-components-demo.log"

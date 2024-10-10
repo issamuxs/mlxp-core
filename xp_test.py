@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 import mlflow
 import argparse
+import json
 from utils import get_next_version
 
 def train_register_lr_model(experiment_name, model_name, register):
@@ -43,8 +44,15 @@ def train_register_lr_model(experiment_name, model_name, register):
     else:
         print("No model registered for this run")
 
+
 def main():
-    mlflow.set_tracking_uri("http://35.181.52.244:8080")
+    with open('ec2_config.json', 'r') as f:
+        config = json.load(f)
+        instance_id = config['INSTANCE_ID']
+        public_ip = config['PUBLIC_IP']
+        mlflow_port = config['MLFLOW_PORT']
+    print(f"Connecting to instance {instance_id} with public IP {public_ip} with MLflow port {mlflow_port}")
+    mlflow.set_tracking_uri(f"http://{public_ip}:{mlflow_port}")
     parser = argparse.ArgumentParser(description="Train and log a logistic regression model in MLflow")
     parser.add_argument("-en", "--experiment_name", type=str)
     parser.add_argument("-mn", "--model_name", type=str)

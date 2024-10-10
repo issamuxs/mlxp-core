@@ -9,7 +9,7 @@ source ./server-deploy.sh
 echo "Welcome to EC2 ML platform Server Creation Script"
 
 #Select key pair
-create_key_pair
+conditional_create_key_pair
 
 #Create EC2 instance
 create_ec2_instance
