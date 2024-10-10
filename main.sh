@@ -1,9 +1,9 @@
 #!/bin/bash
 
-source ./config.sh
-source ./init-ec2-server.sh
-source ./init-s3.sh
-source ./server-deploy.sh
+source ./config/base_config.sh
+source ./scripts/ec2_init.sh
+source ./scripts/s3_init.sh
+source ./scripts/mlflow_ec2_deploy.sh
 
 #Main script execution
 echo "Welcome to EC2 ML platform Server Creation Script"
@@ -15,8 +15,8 @@ conditional_create_key_pair
 create_ec2_instance
 
 #Create S3 bucket for artifacts
-init_s3
+create_s3_bucket
 
 #Server deploy
-config_transfer
+mlflow_ec2_deploy
 

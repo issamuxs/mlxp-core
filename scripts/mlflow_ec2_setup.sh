@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./config.sh
+source base_config.sh
 
 #Update the system
 sudo yum update -y
@@ -7,7 +7,7 @@ sudo yum update -y
 #Install pip and MLflow
 sudo amazon-linux-extras install python3 -y
 sudo yum install python3-pip -y
-pip install mlflow boto3 pymysql
+pip install -r ec2_requirements.txt
 
 #Create a directory for MLflow
 sudo mkdir -p $MLFLOW_DIR

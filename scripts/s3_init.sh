@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source ./config.sh
+source ./config/base_config.sh
 
-init_s3() {
+create_s3_bucket() {
     #Check if S3 bucket exists already
     if aws s3api head-bucket --bucket "$BUCKET_NAME" 2>/dev/null; then
         #If already exists, proceed with installation

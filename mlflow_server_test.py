@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression
 import mlflow
 import argparse
 import json
-from utils import get_next_version
+from utils.mlflow_utils import get_next_version
 
 def train_register_lr_model(experiment_name, model_name, register):
     """
@@ -46,7 +46,7 @@ def train_register_lr_model(experiment_name, model_name, register):
 
 
 def main():
-    with open('ec2_config.json', 'r') as f:
+    with open('config/ec2_params.json', 'r') as f:
         config = json.load(f)
         instance_id = config['INSTANCE_ID']
         public_ip = config['PUBLIC_IP']

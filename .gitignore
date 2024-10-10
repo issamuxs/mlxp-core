@@ -1,1 +1,1 @@
-*.pem
+config/ec2_params.json
