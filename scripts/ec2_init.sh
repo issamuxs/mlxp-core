@@ -50,6 +50,7 @@ conditional_create_key_pair() {
 create_iam_role_from_group() {
     local role_name=$EC2_ROLE_NAME
     local group_name=$SECURITY_GROUP
+    local profile_name=$EC2_PROFILE_NAME
 
     # Check if the role already exists
     if ! aws iam get-role --role-name $role_name &>/dev/null; then
@@ -74,10 +75,10 @@ create_iam_role_from_group() {
         echo "Attempting to attach policies from group $group_name to role $role_name"
         
         # Try to list group policies
-        if group_policies=$(aws iam list-group-policies --group-name $group_name --query 'PolicyNames[]' --output text 2>/dev/null); then
+        if group_policies=$(aws iam list-group-policies --group-name $group_name --query 'PolicyNames[]' --output text); then
             for policy in $group_policies; do
                 echo "Processing policy: $policy"
-                policy_json=$(aws iam get-group-policy --group-name $group_name --policy-name "$policy" --query 'PolicyDocument' --output json 2>/dev/null)
+                policy_json=$(aws iam get-group-policy --group-name $group_name --policy-name "$policy" --query 'PolicyDocument' --output json)
                 if [ $? -eq 0 ]; then
                     echo "Attaching policy $policy to role $role_name"
                     aws iam put-role-policy \
@@ -98,7 +99,7 @@ create_iam_role_from_group() {
         fi
 
         # Try to attach managed policies
-        if attached_policies=$(aws iam list-attached-group-policies --group-name $group_name --query 'AttachedPolicies[].PolicyArn' --output text 2>/dev/null); then
+        if attached_policies=$(aws iam list-attached-group-policies --group-name $group_name --query 'AttachedPolicies[].PolicyArn' --output text); then
             for arn in $attached_policies; do
                 echo "Attaching policy-arn $arn to role $role_name"
                 aws iam attach-role-policy --role-name $role_name --policy-arn $arn
@@ -106,19 +107,19 @@ create_iam_role_from_group() {
         else
             echo "Failed to list attached group policies. Make sure you have the necessary permissions."
         fi
-
-        # Create an instance profile and add the role to it
-        if ! aws iam create-instance-profile --instance-profile-name $role_name &>/dev/null; then
-            echo "Failed to create instance profile. It may already exist."
-        fi
-
-        if ! aws iam add-role-to-instance-profile --instance-profile-name $role_name --role-name $role_name &>/dev/null; then
-            echo "Failed to add role to instance profile. It may already be added."
-        fi
-
-        echo "IAM role $role_name created and configured based on available permissions."
     else
         echo "IAM role $role_name already exists."
+
+    # Create an instance profile and add the role to it
+    if ! aws iam create-instance-profile --instance-profile-name $profile_name &>/dev/null; then
+        echo "Failed to create instance profile. It may already exist."
+    fi
+
+    if ! aws iam add-role-to-instance-profile --instance-profile-name $profile_name --role-name $role_name &>/dev/null; then
+        echo "Failed to add role to instance profile. It may already be added."
+    fi
+    echo "IAM role $role_name created and configured based on available permissions."
+    
     fi
 }
 
@@ -155,7 +156,7 @@ create_ec2_instance() {
         --count 1 \
         --instance-type $INSTANCE_TYPE \
         --key-name $SSH_KEY_NAME \
-        --iam-instance-profile Name=$EC2_ROLE_NAME \
+        --iam-instance-profile Name=$EC2_PROFILE_NAME \
         --security-groups $SECURITY_GROUP \
         --query 'Instances[0].InstanceId' \
         --output text)

@@ -20,8 +20,7 @@ The major steps of the deployment are the following:
 
 The technical steps for the project deployment are the following.
 
-0. TODO
-Currently, security group, associated policy and project user attached to security group are created through AWS console. Next step is to add terraform file to setup these and automate key retrieval to update AWS credentials, config and profile.
+0. Currently, security group, associated policy and project user attached to security group are created through AWS console. Next step is to add terraform file to setup these and automate key retrieval to update AWS credentials, config and profile.
 
 1. Check the AWS profiles:
 ```
