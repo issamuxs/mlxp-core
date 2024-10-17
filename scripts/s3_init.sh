@@ -40,10 +40,7 @@ create_s3_bucket() {
             {
                 "Effect": "Allow",
                 "Principal": "*",
-                "Action": [
-                "s3:PutObject",
-                "s3:PutObjectVersion"
-                ],
+                "Action": "s3:PutObject",
                 "Resource": "arn:aws:s3:::'"$BUCKET_NAME"'/*"
             }
         ]

@@ -24,7 +24,7 @@ DEFAULT_ARTIFACT_ROOT=s3://$BUCKET_NAME/artifacts/
 
 #SSH configuration
 SSH_USER="ec2-user"
-SSH_KEY_NAME="2"
+SSH_KEY_NAME="1"
 
 #Export variables
 export PROJECT_TAG
