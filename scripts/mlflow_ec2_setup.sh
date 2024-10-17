@@ -27,7 +27,7 @@ ExecStart=/home/ec2-user/.local/bin/mlflow server \
     --port $MLFLOW_PORT \
     --backend-store-uri $MLFLOW_BACKEND_STORE \
     --default-artifact-root $DEFAULT_ARTIFACT_ROOT \
-    --serve-artifacts
+    --no-serve-artifacts
 Restart=always
 
 [Install]

@@ -31,4 +31,22 @@ create_s3_bucket() {
     echo "Bucket name: $BUCKET_NAME"
     echo "Update MLflow server configuration to store artifacts at s3://$BUCKET_NAME/artifacts"
 
+    # Add bucket policy to allow public write access (use carefully - to be replaced by VPC to manage client)
+    aws s3api put-public-access-block --bucket $BUCKET_NAME --public-access-block-configuration BlockPublicAcls=false
+    echo "Adding public write access policy to the bucket..."
+    aws s3api put-bucket-policy --bucket "$BUCKET_NAME" --policy '{
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": "*",
+                "Action": [
+                "s3:PutObject",
+                "s3:PutObjectVersion"
+                ],
+                "Resource": "arn:aws:s3:::'"$BUCKET_NAME"'/*"
+            }
+        ]
+    }'
+
 }

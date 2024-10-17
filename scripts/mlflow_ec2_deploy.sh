@@ -22,8 +22,6 @@ mlflow_ec2_deploy() {
     echo "Server setup complete on EC2 instance $INSTANCE_ID"
     echo "You can access the MLflow UI at http://$PUBLIC_IP:$MLFLOW_PORT"
 
-    echo "{\"INSTANCE_ID\": \"$INSTANCE_ID\", \"PUBLIC_IP\": \"$PUBLIC_IP\", \"MLFLOW_PORT\": \"$MLFLOW_PORT\"}" > config/ec2_params.json
-
 }
 
 
