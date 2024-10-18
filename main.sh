@@ -17,7 +17,7 @@ create_ec2_instance
 
 #Create S3 bucket for artifacts
 create_s3_bucket
-create_s3_user
+conditional_create_s3_user
 
 #Server deploy
 mlflow_ec2_deploy

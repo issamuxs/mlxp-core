@@ -14,7 +14,7 @@ EC2_PROFILE_NAME="mlflow-server-profile"
 ACCOUNT_ID="882335105845"
 BUCKET_PREFIX="mlxp-core"
 BUCKET_NAME="${BUCKET_PREFIX}-${ACCOUNT_ID}-${AWS_REGION}"
-S3_USER="s3-new-user"
+S3_USER="s3-access-user"
 
 #MLflow configuration
 MLFLOW_DIR=/opt/mlflow

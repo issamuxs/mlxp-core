@@ -35,7 +35,7 @@ conditional_create_key_pair() {
                 echo "Error: Key pair '$new_key_name' already exists. Please choose a different name."
             else
                 SSH_KEY_NAME="$new_key_name"
-                sed -i '' "s/SSH_KEY_NAME=.*/SSH_KEY_NAME=\"$SSH_KEY_NAME\"/" config/base_config.sh
+                sed -i.bak "s/SSH_KEY_NAME=.*/SSH_KEY_NAME=\"$SSH_KEY_NAME\"/" config/base_config.sh
                 echo "Updated SSH_KEY_NAME in base_config.sh to '$SSH_KEY_NAME'"
                 create_key_pair "$SSH_KEY_NAME"
                 break
@@ -119,8 +119,11 @@ create_iam_role_from_group() {
         echo "Failed to add role to instance profile. It may already be added."
     fi
     echo "IAM role $role_name created and configured based on available permissions."
-    
     fi
+    
+    # Add a delay to allow IAM changes to propagate
+    echo "Waiting for IAM instance profile to propagate..."
+    sleep 15 
 }
 
 
@@ -144,10 +147,6 @@ create_ec2_instance() {
 
     #Create IAM role from group
     create_iam_role_from_group
-
-    # Add a delay to allow IAM changes to propagate
-    echo "Waiting for IAM instance profile to propagate..."
-    sleep 15 
 
     #Launch EC2 instance
     echo "Launching EC2 instance..."

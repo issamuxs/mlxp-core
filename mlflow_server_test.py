@@ -46,7 +46,7 @@ def train_register_lr_model(experiment_name, model_name, register):
 
 
 def main():
-    with open('config/ec2_params.json', 'r') as f:
+    with open('outputs/client_config.json', 'r') as f:
         config = json.load(f)
         instance_id = config['INSTANCE_ID']
         public_ip = config['PUBLIC_IP']
@@ -56,7 +56,7 @@ def main():
     parser = argparse.ArgumentParser(description="Train and log a logistic regression model in MLflow")
     parser.add_argument("-en", "--experiment_name", type=str)
     parser.add_argument("-mn", "--model_name", type=str)
-    parser.add_argument("-r", "--register", choices=['true', 'false'], default='false', type=str)
+    parser.add_argument("-rm", "--register", choices=['true', 'false'], default='false', type=str)
     args = parser.parse_args()
     train_register_lr_model(experiment_name=args.experiment_name, model_name=args.model_name, register=args.register)
 
