@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ./config/base_config.sh
+source ./scripts/aws_init.sh
 
 #Function to create key pair
 
@@ -35,7 +36,7 @@ conditional_create_key_pair() {
                 echo "Error: Key pair '$new_key_name' already exists. Please choose a different name."
             else
                 SSH_KEY_NAME="$new_key_name"
-                sed -i.bak "s/SSH_KEY_NAME=.*/SSH_KEY_NAME=\"$SSH_KEY_NAME\"/" config/base_config.sh
+                sed -i '' "s/SSH_KEY_NAME=.*/SSH_KEY_NAME=\"$SSH_KEY_NAME\"/" config/base_config.sh
                 echo "Updated SSH_KEY_NAME in base_config.sh to '$SSH_KEY_NAME'"
                 create_key_pair "$SSH_KEY_NAME"
                 break
@@ -68,7 +69,7 @@ create_iam_role_from_group() {
                 }]
             }' &>/dev/null; then
             echo "Failed to create role. Make sure you have the necessary permissions."
-            return 1
+            exit
         fi
 
         # Attempt to attach the group's policies to the role
@@ -89,9 +90,11 @@ create_iam_role_from_group() {
                         echo "Failed to attach policy $policy. Error in policy document."
                         echo "Policy document content:"
                         echo "$policy_json"
+                        exit
                     fi
                 else
                     echo "Failed to get policy document for $policy. Skipping."
+                    exit
                 fi
             done
         else
@@ -106,19 +109,20 @@ create_iam_role_from_group() {
             done
         else
             echo "Failed to list attached group policies. Make sure you have the necessary permissions."
+            exit
         fi
     else
         echo "IAM role $role_name already exists."
 
     # Create an instance profile and add the role to it
     if ! aws iam create-instance-profile --instance-profile-name $profile_name &>/dev/null; then
-        echo "Failed to create instance profile. It may already exist."
+        echo "Warning: failed to create instance profile. It may already exist."
     fi
 
     if ! aws iam add-role-to-instance-profile --instance-profile-name $profile_name --role-name $role_name &>/dev/null; then
-        echo "Failed to add role to instance profile. It may already be added."
+        echo "Warning: failed to add role to instance profile. It may already be added."
     fi
-    echo "IAM role $role_name created and configured based on available permissions."
+    echo "IAM role $role_name configured based on available permissions."
     fi
     
     # Add a delay to allow IAM changes to propagate
@@ -128,22 +132,8 @@ create_iam_role_from_group() {
 
 
 create_ec2_instance() {
-
     #Check if security group exists
-    if aws ec2 describe-security-groups --group-names "$SECURITY_GROUP" 2>&1 | grep -q "NotFound"; then
-        
-        #If not, create one
-        echo "Creating a security group..."
-        aws ec2 create-security-group --group-name $SECURITY_GROUP --description "Security group for $PROJECT_TAG project"
-
-        #Add inbound rules
-        echo "Configuring security group rules..."
-        aws ec2 authorize-security-group-ingress --group-name $SECURITY_GROUP --protocol tcp --port 22 --cidr 0.0.0.0/0
-        aws ec2 authorize-security-group-ingress --group-name $SECURITY_GROUP --protocol tcp --port 8080 --cidr 0.0.0.0/0
-
-    else
-        echo "Security group $SECURITY_GROUP already exists. Proceeding with installation..."
-    fi
+    check_security_group
 
     #Create IAM role from group
     create_iam_role_from_group

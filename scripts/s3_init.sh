@@ -18,7 +18,7 @@ create_s3_bucket() {
         #Check if bucket creation was successful
         if [ $? -ne 0 ]; then   
             echo "Failed to create S3 bucket due to unknown error. Exiting."
-            exit 1
+            exit
         fi
     fi
 
@@ -29,10 +29,10 @@ create_s3_bucket() {
 
     echo "S3 setup is now complete."
     echo "Bucket name: $BUCKET_NAME"
-    echo "Update MLflow server configuration to store artifacts at s3://$BUCKET_NAME/artifacts"
+    echo "Updated MLflow server configuration to store artifacts at s3://$BUCKET_NAME/artifacts"
 
     # Add bucket policy to allow public write access (use carefully - to be replaced by VPC to manage client)
-    #aws s3api put-public-access-block --bucket $BUCKET_NAME --public-access-block-configuration BlockPublicAcls=false
+    aws s3api put-public-access-block --bucket $BUCKET_NAME --public-access-block-configuration BlockPublicAcls=false
     echo "Adding public write access policy to the bucket..."
     aws s3api put-bucket-policy --bucket "$BUCKET_NAME" --policy '{
         "Version": "2012-10-17",
